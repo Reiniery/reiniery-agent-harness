@@ -52,7 +52,7 @@ waits for the next user message.
 
 ## Status
 
-The harness and local web interface are implemented. The complete behavior
-checklist passes: single and multi-command tasks, command failure recovery,
-denial handling, and growing per-call token counts. Publishing the GitHub
-repository and writing the installer-skill submission are next.
+The harness and local web interface are implemented and published. The complete
+behavior checklist passes: single and multi-command tasks, command failure
+recovery, denial handling, and growing per-call token counts. The installer
+skill was validated from a fresh clone and submitted to the class repository.
