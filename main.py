@@ -1,8 +1,69 @@
 import os
+import subprocess
 from pathlib import Path
 
 from dotenv import load_dotenv
 from openai import OpenAI
+
+
+MAX_OUTPUT_CHARS = 10_000
+COMMAND_TIMEOUT_SECONDS = 60
+
+BASH_TOOL = {
+    "type": "function",
+    "function": {
+        "name": "bash",
+        "description": (
+            "Run a Bash command in the harness working directory. "
+            "Use it to inspect files, run programs, and complete tasks."
+        ),
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "command": {
+                    "type": "string",
+                    "description": "The Bash command to run.",
+                }
+            },
+            "required": ["command"],
+            "additionalProperties": False,
+        },
+    },
+}
+
+
+def run_bash(command: str) -> str:
+    try:
+        result = subprocess.run(
+            command,
+            shell=True,
+            executable="/bin/bash",
+            cwd=Path.cwd(),
+            capture_output=True,
+            text=True,
+            timeout=COMMAND_TIMEOUT_SECONDS,
+        )
+        output = (
+            f"stdout:\n{result.stdout}\n"
+            f"stderr:\n{result.stderr}\n"
+            f"exit_code: {result.returncode}"
+        )
+    except subprocess.TimeoutExpired as error:
+        stdout = error.stdout or ""
+        stderr = error.stderr or ""
+        if isinstance(stdout, bytes):
+            stdout = stdout.decode(errors="replace")
+        if isinstance(stderr, bytes):
+            stderr = stderr.decode(errors="replace")
+        output = (
+            f"stdout:\n{stdout}\n"
+            f"stderr:\n{stderr}\n"
+            f"error: command timed out after {COMMAND_TIMEOUT_SECONDS} seconds"
+        )
+
+    if len(output) > MAX_OUTPUT_CHARS:
+        output = "[Earlier output truncated]\n" + output[-MAX_OUTPUT_CHARS:]
+    return output
 
 
 def show_usage(usage) -> None:
