@@ -68,6 +68,12 @@ def run_bash(command: str) -> str:
     return output
 
 
+def approve_command(command: str) -> bool:
+    print(f"\nProposed command:\n{command}")
+    answer = input("Run this command? [y/N]: ").strip().lower()
+    return answer in {"y", "yes"}
+
+
 def show_usage(usage) -> None:
     details = usage.prompt_tokens_details
     cached = details.cached_tokens if details and details.cached_tokens is not None else 0
@@ -98,8 +104,10 @@ def run_agent_turn(client: OpenAI, model: str, messages: list[dict]) -> str:
                 try:
                     arguments = json.loads(tool_call.function.arguments)
                     command = arguments["command"]
-                    print(f"\nCommand: {command}")
-                    result = run_bash(command)
+                    if approve_command(command):
+                        result = run_bash(command)
+                    else:
+                        result = "The user declined to run this command."
                 except (json.JSONDecodeError, KeyError, TypeError) as error:
                     result = f"Invalid bash arguments: {error}"
 
