@@ -22,18 +22,23 @@ def main() -> None:
     )
     model = os.environ["MODEL"]
     system_prompt = Path("system_prompt.md").read_text().strip()
-    user_message = input("You: ")
+    messages = [{"role": "system", "content": system_prompt}]
 
-    response = client.chat.completions.create(
-        model=model,
-        messages=[
-            {"role": "system", "content": system_prompt},
-            {"role": "user", "content": user_message},
-        ],
-    )
+    print("Chat started. Type /exit to quit.")
+    while True:
+        user_message = input("You: ").strip()
+        if user_message == "/exit":
+            break
+        if not user_message:
+            continue
 
-    print(f"Assistant: {response.choices[0].message.content}")
-    show_usage(response.usage)
+        messages.append({"role": "user", "content": user_message})
+        response = client.chat.completions.create(model=model, messages=messages)
+        assistant_message = response.choices[0].message.content or ""
+        messages.append({"role": "assistant", "content": assistant_message})
+
+        print(f"Assistant: {assistant_message}")
+        show_usage(response.usage)
 
 
 if __name__ == "__main__":
