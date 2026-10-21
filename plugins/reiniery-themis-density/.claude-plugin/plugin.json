@@ -1,0 +1,8 @@
+{
+  "name": "reiniery-themis-density",
+  "version": "0.1.0",
+  "description": "Summarize a local THEMIS-A density CSV and identify sampling gaps.",
+  "author": {
+    "name": "Reiniery"
+  }
+}

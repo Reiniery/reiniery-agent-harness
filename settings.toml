@@ -1,0 +1,9 @@
+[permissions]
+# Only these trusted MCP tools skip approval. Bash ALWAYS requires approval.
+allow = [
+  "telegram__send_message",
+  "telegram__wait_for_messages",
+  "themis_density__describe_dataset",
+  "themis_density__summarize_density",
+  "themis_density__find_sampling_gaps",
+]

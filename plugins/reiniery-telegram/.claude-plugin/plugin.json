@@ -1,0 +1,6 @@
+{
+  "name": "reiniery-telegram",
+  "version": "0.1.0",
+  "description": "Send and receive messages in the owner's private Telegram chat.",
+  "author": {"name": "Reiniery"}
+}

@@ -1,0 +1,15 @@
+{
+  "mcpServers": {
+    "themis_density": {
+      "command": "uv",
+      "args": [
+        "run",
+        "--script",
+        "${CLAUDE_PLUGIN_ROOT}/server.py"
+      ],
+      "env": {
+        "THEMIS_DATA_DIR": "${THEMIS_DATA_DIR}"
+      }
+    }
+  }
+}
