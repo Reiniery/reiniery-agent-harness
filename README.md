@@ -103,8 +103,10 @@ in Codex: inside/outside medians matched the source data and a test greeting was
 sent. A real queued phone message was rejected with a wrong chat ID and skipped
 by normal startup initialization. Sixteen automated regression tests pass.
 
-Publication is pending student review. Both plugin folders and a submission README
-are prepared under week-3/submissions/reiniery in the class repository. GitHub
-sign-in works with network access. The saved NVIDIA model returned provider 404;
+Published the harness update and submitted both plugins with the submission README
+under week-3/submissions/reiniery. Class pull request:
+https://github.com/huangzesen/ai-in-research-homework/pull/21
+The submission is awaiting instructor review. GitHub sign-in works with network
+access. The saved NVIDIA model returned provider 404;
 use --model openrouter/free for the validated phone run. Private data and credentials
 remain local. See VALIDATION.md for evidence and scientific limitations.
